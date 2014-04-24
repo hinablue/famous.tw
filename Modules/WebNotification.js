@@ -118,7 +118,7 @@ define(function(require, exports, module) {
   }
   WebNotification.prototype.setOptions = function setOptions(options) {
     for (var attr in this.options) {
-      if (options[attr] !== undefined) {
+      if (options && options[attr] !== undefined) {
         this.options[attr] = options[attr];
       } else {
         this.options[attr] = this.options[attr];
