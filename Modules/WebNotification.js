@@ -98,6 +98,10 @@ define(function(require, exports, module) {
   WebNotification.prototype.getPermission = function getPermission() {
     return this._permission = this.Notification.permission;
   }
+  WebNotification.prototype.close = function close() {
+    this.Notification.close();
+    this._eventOutput.emit('close');
+  }
   WebNotification.prototype.getTitle = function getTitle() {
     return this.options.title;
   }
