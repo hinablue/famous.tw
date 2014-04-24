@@ -1,0 +1,155 @@
+html, body {
+  background-color: #ffffff;
+  color: #333333;
+  font: 400 14px "Helvetica Neue", Helvetica, Arial, sans-serif
+}
+
+.famousRedText{
+	color: #fa5c4f;
+}
+
+.famousRedBackground{
+	background-color: #fa5c4f;
+}
+
+.famousBlueText{
+	color: #3cf;
+}
+
+.famousBlueBackground{
+	background-color: #3cf;
+}
+
+.graph {
+	background-color: black;
+	background-image:
+	linear-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px), linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.25) 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px), linear-gradient(transparent 3px, black 3px, black 238px, transparent 238px), linear-gradient(90deg, white 3px, transparent 3px, transparent 238px, white 238px);
+	background-size:
+	40px 40px, 240px 240px, 40px 40px, 240px 240px, 240px 240px, 240px 240px
+}
+
+.banner {
+  text-align: center;
+}
+.banner .bannerTitle {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333333;
+}
+.banner .bannerTitle a {
+  color: #333333;
+  text-decoration: underline;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+.photos {
+  border: 2px solid white;
+  background-image: none;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: white;
+}
+.photo-title-and-author {
+  padding: 0.6em;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.1);
+}
+.table-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: table;
+}
+.table-wrapper .table-cell {
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  display: table-cell;
+}
+.photo-rank {
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.1);
+}
+.title {
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  line-height: 1em;
+  margin: 0;
+  padding: 0;
+}
+.author {
+  color: white;
+  font-size: 0.86em;
+  margin: 0;
+  padding: 0;
+}
+.social-network-share {
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-position: center center;
+  color: white;
+  -webkit-background-size: 40%;
+  -moz-background-size: 40%;
+  -o-background-size: 40%;
+  -ms-background-size: 40%;
+  background-size: 40%;
+}
+.social-facebook {
+  background-image: url(../img/facebook.svg);
+}
+.social-facebook:hover {
+  background-color: #3b5998;
+}
+.social-twitter {
+  background-image: url(../img/twitter.svg);
+}
+.social-twitter:hover {
+  background-color: #00aced;
+}
+.social-pinterest {
+  background-image: url(../img/pinterest.svg);
+}
+.social-pinterest:hover {
+  background-color: #cc2127;
+}
+.social-network-share a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.loading-banner {
+  font-size: 2em;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  text-align: center;
+  z-index: 9999;
+}
+.github-banner {
+  background: rgba(200, 50, 50, 0.85);
+  color: white;
+  text-align: center;
+  z-index: 9999;
+  -webkit-box-shadow: 0px 1px 1px -1px gray;
+  -moz-box-shadow: 0px 1px 1px -1px gray;
+  -o-box-shadow: 0px 1px 1px -1px gray;
+  -ms-box-shadow: 0px 1px 1px -1px gray;
+  box-shadow: 0px 1px 1px -1px gray;
+}
+.github-banner a {
+  display: inline-block;
+  padding: 0.8em;
+  font-weight: bold;
+  line-height: 0;
+}
+.photo-container {
+}
+.photo-scroll-container {
+  font-size: 12px;
+}
