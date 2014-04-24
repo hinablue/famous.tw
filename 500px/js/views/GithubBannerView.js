@@ -21,7 +21,7 @@ define(function(require, exports, module) {
     var surf = new Surface({
       size: [200, 24],
       classes: ['github-banner'],
-      content: '<a href="">Fork me on github</a>'
+      content: '<a href="https://github.com/hinablue/famous.tw/">Fork me on github</a>'
     });
     var modChain = new ModifierChain();
     modChain.addModifier(
