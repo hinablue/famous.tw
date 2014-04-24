@@ -67,8 +67,6 @@ define(function(require, exports, module) {
       return;
     }
 
-    console.log(this.options);
-
     if (this._permission !== 'granted') {
       _requestPermission.call(this, function() {
         var notification = new this.Notification(this.options.title, {
