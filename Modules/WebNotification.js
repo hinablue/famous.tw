@@ -2,9 +2,7 @@ define(function(require, exports, module) {
   var EventHandler = require('famous/core/EventHandler');
 
   function WebNotification(options) {
-    this.Notification = 'Notification' in window ? window.Notification : false;
-
-    if (false === this.Notification) return;
+    if (false === ('Notification' in window)) return;
 
     this.options = Object.create(WebNotification.DEFAULT_OPTIONS);
     this._eventInput = new EventHandler();
@@ -47,10 +45,10 @@ define(function(require, exports, module) {
   };
 
   function _requestPermission(callback) {
-    if (this.Notification.permission === this._permission) return;
+    if (Notification.permission === this._permission) return;
 
-    this.Notification.requestPermission(function(permission) {
-      this.Notification.permission = permission;
+    Notification.requestPermission(function(permission) {
+      Notification.permission = permission;
       this._permission = permission;
 
       if (callback !== undefined && typeof callback === 'function') {
@@ -67,27 +65,43 @@ define(function(require, exports, module) {
       return;
     }
 
+    if (this._permission === 'denied') {
+      this._eventOutput.emit('denied');
+      return;
+    }
+
     if (this._permission !== 'granted') {
       _requestPermission.call(this, function() {
-        var notification = new this.Notification(this.options.title, {
-          body: this.options.body,
-          dir: this.options.dir,
-          lang: this.options.lang,
-          tag: this.options.tag,
-          icon: this.options.icon,
-        });
-        this._eventOutput.emit('sent');
+        _bindNotification.call(this);
       }.bind(this));
     } else {
-      var notification = new this.Notification(this.options.title, {
-        body: this.options.body,
-        dir: this.options.dir,
-        lang: this.options.lang,
-        tag: this.options.tag,
-        icon: this.options.icon,
-      });
-      this._eventOutput.emit('sent');
+      _bindNotification.call(this);
     }
+  }
+
+  function _bindNotification() {
+    this.Notification = new Notification(this.options.title, {
+      body: this.options.body,
+      dir: this.options.dir,
+      lang: this.options.lang,
+      tag: this.options.tag,
+      icon: this.options.icon,
+    });
+
+    this.Notification.onclick = function() {
+      this._eventOutput.emit('click');
+    }.bind(this);
+    this.Notification.onshow = function() {
+      this._eventOutput.emit('show');
+    }.bind(this);
+    this.Notification.onerror = function() {
+      this._eventOutput.emit('error');
+    }.bind(this);
+    this.Notification.onclose = function() {
+      this._eventOutput.emit('close');
+    }.bind(this);
+
+    this._eventOutput.emit('sent');
   }
 
   function _bindEvent() {
