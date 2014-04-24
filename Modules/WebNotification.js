@@ -93,6 +93,7 @@ define(function(require, exports, module) {
   function _bindEvent() {
     this._eventInput.bindThis(this);
     this._eventInput.on('send', _sendNotification);
+    this._eventInput.on('close', this.close);
   }
 
   WebNotification.prototype.getPermission = function getPermission() {
