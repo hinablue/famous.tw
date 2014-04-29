@@ -10,8 +10,18 @@ define(function(require, exports, module) {
 
   var mainCtx = Engine.createContext();
 
+  var deviceHash = window.location.hash.substring(1);
+
+  if (deviceHash === 'ipad') {
+    deviceHash = 'ipad';
+  } else if(deviceHash === 'nexus') {
+    deviceHash = 'nexus';
+  } else {
+    deviceHash = 'iphone';
+  }
+
   var deviceView = new DeviceView({
-    type: 'iphone',
+    type: deviceHash,
     screenWidth: 'default'
   });
 
@@ -21,7 +31,7 @@ define(function(require, exports, module) {
     transform: Transform.scale(.1, .1, 1)
   });
 
-  deviceView.setiFrame('//www.youtube-nocookie.com/embed/Oxn06TA8VeU');
+  deviceView.setiFrame('https://www.youtube-nocookie.com/embed/Oxn06TA8VeU');
 
   var s = (window.innerHeight-100) / Math.max(window.innerHeight-100, deviceView.getSize()[0], deviceView.getSize()[1]);
   deviceMod.setTransform(Transform.scale(s, s, 1), {duration: 500, curve: Easing.outBack});
