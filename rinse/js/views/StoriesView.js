@@ -5,7 +5,7 @@ define(function(require, exports, module) {
   var View                 = require('famous/core/View');
   var ContainerSurface     = require('famous/surfaces/ContainerSurface');
   var Utility              = require('famous/utilities/Utility');
-  var ScrollView           = require('famous/views/ScrollView');
+  var ScrollView           = require('famous/views/Scrollview');
   var SequentialLayout     = require('famous/views/SequentialLayout');
 
   function StoriesView() {
