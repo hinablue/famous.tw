@@ -44,7 +44,7 @@ define(function(require, exports, module) {
 
     this.sliderView = new SliderView({
       scroller: this.scrollView,
-      height: window.innerHeight - 100
+      height: window.innerHeight > 700 ? 700 : window.innerHeight
     });
     this.views.push(this.sliderView);
 
@@ -67,12 +67,30 @@ define(function(require, exports, module) {
     this.aboutView = new AboutView();
     this.add(this.aboutView);
 
+    /* Fixed the scroll Infinity issue. */
+    console.log(this.getSize());
+    this.scrollView._scroller.on('edgeHit', function() {
+      if (this.scrollView._scroller.onEdge() === -1 
+        && (this.scrollView.getPosition() > -0.01 || this.scrollView.getPosition() === 0)) {
+        this.scrollView.setPosition(0);
+        return true;
+      } else if (this.scrollView._scroller.onEdge() === 1) {
+        if (this.scrollView.getPosition() - this.options.bottomEdge < -0.01) {
+          this.options.bottomEdge = this.scrollView.getPosition();
+          this.scrollView.setPosition(this.scrollView.getPosition());
+          return true;
+        }
+        this.options.bottomEdge = this.scrollView.getPosition();
+      }
+    }.bind(this));
   }
 
   AppView.prototype = Object.create(View.prototype);
   AppView.prototype.constructor = AppView;
 
-  AppView.DEFAULT_OPTIONS = {};
+  AppView.DEFAULT_OPTIONS = {
+    bottomEdge: 0
+  };
 
   module.exports = AppView;
 });
