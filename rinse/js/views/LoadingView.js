@@ -91,8 +91,8 @@ define(function(require, exports, module) {
   LoadingView.DEFAULT_OPTIONS = {
     total: 10,
     sliderHeight: 500,
-    storyWidth: 274,
-    storyHeight: 400,
+    storyWidth: 400,
+    storyHeight: 274,
     app: undefined
   };
 
