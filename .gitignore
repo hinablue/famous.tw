@@ -1,2 +1,13 @@
 .DS_Store
 lib/famous
+lib/famous/core
+lib/famous/events
+lib/famous/inputs
+lib/famous/math
+lib/famous/modifiers
+lib/famous/physics
+lib/famous/surfaces
+lib/famous/transitions
+lib/famous/utilities
+lib/famous/views
+lib/famous/widgets
