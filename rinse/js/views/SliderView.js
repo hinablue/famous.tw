@@ -99,7 +99,6 @@ define(function(require, exports, module) {
     });
 
     this.container.add(mod).add(surf);
-
     this.container.pipe(this.options.scroller);
 
     this._add(this.mod).add(this.container);

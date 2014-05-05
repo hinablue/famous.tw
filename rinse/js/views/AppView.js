@@ -68,17 +68,15 @@ define(function(require, exports, module) {
     this.add(this.aboutView);
 
     /* Fixed the scroll Infinity issue. */
-    console.log(this.getSize());
+    console.log(this.scrollView);
+    this.scrollView.setPosition(0);
     this.scrollView._scroller.on('edgeHit', function() {
       if (this.scrollView._scroller.onEdge() === -1 
         && (this.scrollView.getPosition() > -0.01 || this.scrollView.getPosition() === 0)) {
         this.scrollView.setPosition(0);
-        return true;
       } else if (this.scrollView._scroller.onEdge() === 1) {
         if (this.scrollView.getPosition() - this.options.bottomEdge < -0.01) {
-          this.options.bottomEdge = this.scrollView.getPosition();
-          this.scrollView.setPosition(this.scrollView.getPosition());
-          return true;
+          this.scrollView.setPosition(Math.ceil(this.scrollView.getPosition() - 1));
         }
         this.options.bottomEdge = this.scrollView.getPosition();
       }
