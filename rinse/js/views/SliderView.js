@@ -64,17 +64,6 @@ define(function(require, exports, module) {
         overflow: 'hidden'
       }
     });
-    this.sliderContainerMod = new Modifier({
-      taransform: Transform.translate(0, 0, 0)
-    });
-
-    var sequentialLayout = new SequentialLayout({
-      direction: Utility.Direction.X
-    });
-    sequentialLayout.sequenceFrom(this.sliders);
-
-    this.sliderContainer.add(this.sliderContainerMod).add(sequentialLayout);
-
     this.container.add(this.sliderContainer);
 
     // Create slide items
@@ -180,7 +169,7 @@ define(function(require, exports, module) {
 
     for(var i = (this.options.total - 1); i >= 0; i--) {
       container = new ContainerSurface({
-        size: [undefined, undefined]
+        size: [window.innerWidth, undefined]
       });
 
       background = 'http://placekitten.com/'+window.innerWidth+'/'+this.options.height+'?image='+(this.options.total - i),
@@ -207,13 +196,14 @@ define(function(require, exports, module) {
       container.add(mod).add(surf);
 
       mod = new Modifier({
-        transform: Transform.translate((i === this.options.total - 1 ? window.innerWidth * -1 : i === 1 ? window.innerWidth : i === 0 ? 0 : window.innerWidth * -10), 0, 0)
+        transform: Transform.translate((i === this.options.total - 1 ? window.innerWidth * -1 : i === 0 ? 0 : i === 1 ? window.innerWidth : window.innerWidth * -10), 0, 0)
       });
 
       view = new View();
       view._add(mod).add(container);
 
       this.sliders.push(view);
+      this.sliderContainer.add(view);
     }
   }
 
