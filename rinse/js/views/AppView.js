@@ -19,9 +19,6 @@ define(function(require, exports, module) {
   function AppView() {
     View.apply(this, arguments);
 
-    // this.loadingView = new LoadingView();
-    // this.add(this.loadingView);
-
     this.container = new ContainerSurface({
       properties: {
         overflow: 'hidden'

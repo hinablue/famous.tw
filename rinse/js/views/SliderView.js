@@ -64,6 +64,7 @@ define(function(require, exports, module) {
         overflow: 'hidden'
       }
     });
+
     this.container.add(this.sliderContainer);
 
     // Create slide items
