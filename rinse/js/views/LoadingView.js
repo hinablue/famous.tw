@@ -45,7 +45,10 @@ define(function(require, exports, module) {
               counter++;
               surf.setContent(Math.ceil((counter / total) * 100) + '%');
               mod.setSize([Math.ceil((counter / total) * 100)*2, 24]);
+              mod.setTransform(Transform.translate(0, window.innerHeight/2 * (counter / total) * -1, 0));
               if (counter === total) {
+                mod.setTransform(Transform.translate(0, -100000, 0));
+
                 var appView = new AppView();
                 var mainCtx = Engine.createContext();
                 mainCtx.add(appView);
@@ -65,7 +68,10 @@ define(function(require, exports, module) {
               counter++;
               surf.setContent(Math.ceil((counter / total) * 100) + '%');
               mod.setSize([Math.ceil((counter / total) * 100)*2, 24]);
+              mod.setTransform(Transform.translate(0, window.innerHeight/2 * (counter / total) * -1, 0));
               if (counter === total) {
+                mod.setTransform(Transform.translate(0, -100000, 0));
+
                 var appView = new AppView();
                 var mainCtx = Engine.createContext();
                 mainCtx.add(appView);
