@@ -29,7 +29,7 @@ define(function(require, exports, module) {
 
     var slider, story, xhr, counter = 1, total = this.options.total * 2;
     for(var i = 0; i < this.options.total; i++) {
-      slider = 'http://placekitten.com/'+window.innerWidth+'/'+this.options.sliderHeight+'?image='+(this.options.total - i);
+      slider = 'http://placekitten.com/'+window.innerWidth+'/'+this.options.sliderHeight+'?image='+(this.options.total - i + 1);
       story = 'http://placekitten.com/'+this.options.storyWidth+'/'+this.options.storyHeight+'?image='+(this.options.total - i);
 
       (function(img) {
