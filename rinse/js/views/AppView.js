@@ -20,6 +20,7 @@ define(function(require, exports, module) {
     View.apply(this, arguments);
 
     this.container = new ContainerSurface({
+      size: [undefined, undefined],
       properties: {
         overflow: 'auto'
       }
@@ -29,14 +30,14 @@ define(function(require, exports, module) {
     });
 
     this.views = [];
-    this.scrollView = new SequentialLayout({
-      direction: Utility.Direction.Y
-    });
+    // this.scrollView = new SequentialLayout({
+    //   direction: Utility.Direction.Y
+    // });
     // this.scrollView = new ScrollExtension({
     //   margin: 1000000
     // });
-    this.scrollView.sequenceFrom(this.views);
-    this.container.add(this.scrollView);
+    // this.scrollView.sequenceFrom(this.views);
+    // this.container.add(this.scrollView);
 
     this._add(this.containerMod).add(this.container);
 
@@ -44,18 +45,36 @@ define(function(require, exports, module) {
       scroller: this.scrollView,
       height: window.innerHeight > 700 ? 700 : window.innerHeight
     });
-    this.views.push(this.sliderView);
+    // this.views.push(this.sliderView);
+    mod = new Modifier({});
+    view = new View();
+    view._add(mod).add(this.sliderView);
+    this.container.add(view);
 
     this.contextView = new ContextView({
       scroller: this.scrollView,
       height: 500
     });
-    this.views.push(this.contextView);
+    // this.views.push(this.contextView);
+    mod = new Modifier({
+      transform: Transform.translate(0, (window.innerHeight > 700 ? 700 : window.innerHeight), 0)
+    });
+    view = new View();
+    view._add(mod).add(this.contextView);
+    this.container.add(view);
 
     this.storiesView = new StoriesView({
       scroller: this.scrollView
     });
-    this.views.push(this.storiesView);
+    // this.views.push(this.storiesView);
+    mod = new Modifier({
+      transform: Transform.translate(0, (window.innerHeight > 700 ? 700 : window.innerHeight) + 500, 0)
+    });
+    view = new View();
+    view._add(mod).add(this.storiesView);
+    this.container.add(view);
+
+    this._add(this.containerMod).add(this.container);
 
     this.menuView = new MenuView({
       containerMod: this.containerMod

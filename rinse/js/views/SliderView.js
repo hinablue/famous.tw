@@ -6,7 +6,6 @@ define(function(require, exports, module) {
   var View                 = require('famous/core/View');
   var ContainerSurface     = require('famous/surfaces/ContainerSurface');
   var Utility              = require('famous/utilities/Utility');
-  var ScrollView           = require('famous/views/Scrollview');
   var SequentialLayout     = require('famous/views/SequentialLayout');
 
   function SliderView() {
@@ -17,31 +16,31 @@ define(function(require, exports, module) {
     this._navigationDot = 0;
     this._navigationSurf = [];
 
-    // RWD
-    Engine.on('resize', function() {
-      if (this._rwdDelay) clearTimeout(this._rwdDelay);
-      this._rwdDelay = setTimeout(function() {
-        var current, prev, next;
-        current = this.options.total - this.options.page >= this.options.total ?
-                  this.options.total - 1 : this.options.total - this.options.page <= 0 ?
-                  0 : this.options.total - this.options.page;
-        prev = current + 1 >= this.options.total ? 0 : current + 1;
-        next = current - 1 < 0 ? this.options.total - 1 : current - 1;
-
-        this.sliders[current]._node.get().setTransform(
-          Transform.translate(0, 0, 0),
-          this.options.transition
-        );
-        this.sliders[prev]._node.get().setTransform(
-          Transform.translate(window.innerWidth * -1, 0, 0),
-          this.options.transition
-        );
-        this.sliders[next]._node.get().setTransform(
-          Transform.translate(window.innerWidth, 0, 0),
-          this.options.transition
-        );
-      }.bind(this), 500);
-    }.bind(this));
+    // // RWD
+    // Engine.on('resize', function() {
+    //   if (this._rwdDelay) clearTimeout(this._rwdDelay);
+    //   this._rwdDelay = setTimeout(function() {
+    //     var current, prev, next;
+    //     current = this.options.total - this.options.page >= this.options.total ?
+    //               this.options.total - 1 : this.options.total - this.options.page <= 0 ?
+    //               0 : this.options.total - this.options.page;
+    //     prev = current + 1 >= this.options.total ? 0 : current + 1;
+    //     next = current - 1 < 0 ? this.options.total - 1 : current - 1;
+    //
+    //     this.sliders[current]._node.get().setTransform(
+    //       Transform.translate(0, 0, 0),
+    //       this.options.transition
+    //     );
+    //     this.sliders[prev]._node.get().setTransform(
+    //       Transform.translate(window.innerWidth * -1, 0, 0),
+    //       this.options.transition
+    //     );
+    //     this.sliders[next]._node.get().setTransform(
+    //       Transform.translate(window.innerWidth, 0, 0),
+    //       this.options.transition
+    //     );
+    //   }.bind(this), 500);
+    // }.bind(this));
 
     _createSlider.call(this);
   }
@@ -89,7 +88,7 @@ define(function(require, exports, module) {
     });
 
     this.container.add(mod).add(surf);
-    this.container.pipe(this.options.scroller);
+    //this.container.pipe(this.options.scroller);
 
     this._add(this.mod).add(this.container);
   }
@@ -179,7 +178,7 @@ define(function(require, exports, module) {
 
     for(i = (this.options.total - 1); i >= 0; i--) {
       container = new ContainerSurface({
-        size: [window.innerWidth, undefined]
+        size: [window.innerWidth, this.options.height]
       });
 
       background = 'http://placekitten.com/'+window.innerWidth+'/'+this.options.height+'?image='+(this.options.total - i);

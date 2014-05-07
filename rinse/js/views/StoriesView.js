@@ -128,7 +128,7 @@ define(function(require, exports, module) {
     container.add(gridLayout);
 
     this.container.add(mod).add(container);
-    this.container.pipe(this.options.scroller);
+    //this.container.pipe(this.options.scroller);
 
     this.add(this.container);
   }
