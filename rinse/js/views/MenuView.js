@@ -4,7 +4,7 @@ define(function(require, exports, module) {
   var Transform            = require('famous/core/Transform');
   var View                 = require('famous/core/View');
   var ContainerSurface     = require('famous/surfaces/ContainerSurface');
-  var ScrollView           = require('famous/views/Scrollview');
+  var ScrollExtension      = require('views/ScrollExtension');
 
   function MenuView() {
     View.apply(this, arguments);
@@ -20,7 +20,7 @@ define(function(require, exports, module) {
     this.container = new ContainerSurface({
       classes: ['menu-container']
     });
-    this.scrollView = new ScrollView({
+    this.scrollView = new ScrollExtension({
       margin: 1000000
     });
     this.scrollView.sequenceFrom(this.items);
