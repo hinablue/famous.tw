@@ -6,9 +6,9 @@ define(function(require, exports, module) {
   var View                 = require('famous/core/View');
   var Utility              = require('famous/utilities/Utility');
   var ContainerSurface     = require('famous/surfaces/ContainerSurface');
-  var ScrollView           = require('famous/views/Scrollview');
   var SequentialLayout     = require('famous/views/SequentialLayout');
 
+  //var ScrollExtension      = require('views/ScrollExtension');
   var MenuView             = require('views/MenuView');
   var SliderView           = require('views/SliderView');
   var ContextView          = require('views/ContextView');
@@ -21,7 +21,7 @@ define(function(require, exports, module) {
 
     this.container = new ContainerSurface({
       properties: {
-        overflow: 'hidden'
+        overflow: 'auto'
       }
     });
     this.containerMod = new Modifier({
@@ -29,11 +29,12 @@ define(function(require, exports, module) {
     });
 
     this.views = [];
-    this.scrollView = new ScrollView({
-      margin: 10000000,
-      drag: 0.00005,
-      speedLimit: 5
+    this.scrollView = new SequentialLayout({
+      direction: Utility.Direction.Y
     });
+    // this.scrollView = new ScrollExtension({
+    //   margin: 1000000
+    // });
     this.scrollView.sequenceFrom(this.views);
     this.container.add(this.scrollView);
 
@@ -64,19 +65,8 @@ define(function(require, exports, module) {
     this.aboutView = new AboutView();
     this.add(this.aboutView);
 
-    /* Fixed the scroll Infinity issue. */
-    this.scrollView.setPosition(0);
-    this.scrollView._scroller.on('edgeHit', function() {
-      if (this.scrollView._scroller.onEdge() === -1
-        && (this.scrollView.getPosition() > -0.01 || this.scrollView.getPosition() === 0)) {
-        this.scrollView.setPosition(0);
-      } else if (this.scrollView._scroller.onEdge() === 1) {
-        if (this.scrollView.getPosition() - this.options.bottomEdge < -0.01) {
-          this.scrollView.setPosition(Math.ceil(this.scrollView.getPosition() - 1));
-        }
-        this.options.bottomEdge = this.scrollView.getPosition();
-      }
-    }.bind(this));
+    this.loadingView = new LoadingView();
+    this.add(this.loadingView);
   }
 
   AppView.prototype = Object.create(View.prototype);
