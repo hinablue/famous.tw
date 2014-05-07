@@ -32,7 +32,7 @@ define(function(require, exports, module) {
     });
 
     this.container.add(mod).add(surf);
-    //this.container.pipe(this.options.scroller);
+    this.container.pipe(this.options.scroller);
 
     this.add(this.container);
   }
