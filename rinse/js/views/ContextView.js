@@ -8,8 +8,6 @@ define(function(require, exports, module) {
   function ContextView() {
     View.apply(this, arguments);
 
-    this.stories = [];
-
     _createContext.call(this);
   }
 
@@ -20,7 +18,6 @@ define(function(require, exports, module) {
         overflow: 'hidden'
       }
     });
-    this.mod = new Modifier({});
 
     var surf = new Surface({
       size: [window.innerWidth * 0.8, this.options.height * 2 / 3],
@@ -35,9 +32,9 @@ define(function(require, exports, module) {
     });
 
     this.container.add(mod).add(surf);
-    this.container.pipe(this.options.scroller);
+    //this.container.pipe(this.options.scroller);
 
-    this._add(this.mod).add(this.container);
+    this.add(this.container);
   }
 
   ContextView.prototype = Object.create(View.prototype);
