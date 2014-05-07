@@ -94,62 +94,71 @@ define(function(require, exports, module) {
     this._add(this.mod).add(this.container);
   }
 
+  function _createNavButton(direction) {
+    // Prev, Next button
+    container = new ContainerSurface({
+      size: [115, undefined],
+      classes: ['nav-buttons']
+    });
+    surf = new Surface({
+      size: [96, 96],
+      classes: ['button-'+direction],
+      content: '<i class="fa fa-angle-'+(direction === 'prev' ? 'left' : 'right')+'"></i>',
+      properties: {
+        textAlign: 'center',
+        fontSize: '96px',
+        lineHeight: '96px'
+      }
+    });
+    mod = new Modifier({
+      origin: [0.5, 0.5]
+    });
+    container.add(mod).add(surf);
+    mod = new Modifier({
+      origin: [(direction === 'prev' ? 0 : 1), 0]
+    });
+
+    container.on('click', function() {
+      this.slidingPage(direction);
+    }.bind(this));
+
+    this.container.add(mod).add(container);
+  }
+
+  function _createNavBubble(bubble, view) {
+    var surf, mod;
+
+    surf = new Surface({
+      classes: (bubble === 0 ? ['button-page-dot', 'active'] : ['button-page-dot'])
+    });
+    mod = new Modifier({
+      size: (bubble === 0 ? [12, 12] : [4, 4]),
+      transform: Transform.translate(bubble * 24 + 4, 0, 0),
+      origin: [0, 0.5]
+    });
+    view._add(mod).add(surf);
+
+    surf.on('click', function() {
+      this.jumpToSlide(bubble);
+    }.bind(this));
+
+    this._navigationSurf.push({view: view, surf: surf});
+  }
+
   function _createNavigation() {
-    var surf, mod, container, view;
+    var surf, mod, container, view, i;
 
-    for (var i = 0; i < 2; i++) {
-      // Prev, Next button
-      container = new ContainerSurface({
-        size: [115, undefined],
-        classes: ['nav-buttons']
-      });
-      surf = new Surface({
-        size: [96, 96],
-        classes: ['button-'+(i === 0 ? 'prev' : 'next')],
-        content: '<i class="fa fa-angle-'+(i === 0 ? 'left' : 'right')+'"></i>',
-        properties: {
-          textAlign: 'center',
-          fontSize: '96px',
-          lineHeight: '96px'
-        }
-      });
-      mod = new Modifier({
-        origin: [0.5, 0.5]
-      });
-      container.add(mod).add(surf);
-      mod = new Modifier({
-        origin: [i, 0]
-      });
-
-      container.on('click', function(key, event) {
-        this.slidingPage((key === 0 ? 'prev' : 'next'));
-      }.bind(this, i));
-      this.container.add(mod).add(container);
-    }
+    _createNavButton.call(this, 'prev');
+    _createNavButton.call(this, 'next');
 
     container = new ContainerSurface({
       size: [24 * this.options.total, 12]
     });
 
     view = new View();
-    for (var i=0; i < this.options.total; i++) {
-      surf = new Surface({
-        classes: (i === 0 ? ['button-page-dot', 'active'] : ['button-page-dot'])
-      });
-      mod = new Modifier({
-        size: (i === 0 ? [12, 12] : [4, 4]),
-        transform: Transform.translate(i * 24 + 4, 0, 0),
-        origin: [0, 0.5]
-      });
-      view._add(mod).add(surf);
-
-      surf.on('click', function(key, event) {
-        this.jumpToSlide(key);
-      }.bind(this, i));
-
-      this._navigationSurf.push({view: view, surf: surf});
+    for (i = 0; i < this.options.total; i++) {
+      _createNavBubble.call(this, i, view);
     }
-
     container.add(view);
 
     mod = new Modifier({
@@ -160,7 +169,7 @@ define(function(require, exports, module) {
   }
 
   function _createSlideItem() {
-    var view, container, surf, mod, bg, data, background;
+    var view, container, surf, mod, bg, data, background, i;
 
     data = {
       author: 'Hina Chen',
@@ -168,12 +177,13 @@ define(function(require, exports, module) {
       message: '“A Salaryman refers to a Japanese white-collar businessman. Every day we have the bluses. The days which are busy with work continue.”'
     };
 
-    for(var i = (this.options.total - 1); i >= 0; i--) {
+    for(i = (this.options.total - 1); i >= 0; i--) {
       container = new ContainerSurface({
         size: [window.innerWidth, undefined]
       });
 
-      background = 'http://placekitten.com/'+window.innerWidth+'/'+this.options.height+'?image='+(this.options.total - i),
+      background = 'http://placekitten.com/'+window.innerWidth+'/'+this.options.height+'?image='+(this.options.total - i);
+
       bg = new Surface({
         size: [undefined, undefined],
         classes: ['slide-background'],
@@ -288,7 +298,7 @@ define(function(require, exports, module) {
     }
 
     this.options.page = slide + 1;
-  }
+  };
 
   SliderView.prototype.slidingPage = function slidingPage(direction) {
     var current, next, prev, feature;
@@ -335,7 +345,7 @@ define(function(require, exports, module) {
       this.options.page--;
       if (this.options.page <= 0) this.options.page = this.options.total;
     }
-  }
+  };
 
   SliderView.DEFAULT_OPTIONS = {
     scroller: undefined,

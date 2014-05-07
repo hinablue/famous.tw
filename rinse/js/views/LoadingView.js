@@ -5,7 +5,6 @@ define(function(require, exports, module) {
   var Transform            = require('famous/core/Transform');
 
   var View                 = require('famous/core/View');
-  var AppView              = require('views/AppView');
 
   function LoadingView() {
     View.apply(this, arguments);
@@ -48,10 +47,6 @@ define(function(require, exports, module) {
               mod.setTransform(Transform.translate(0, window.innerHeight/2 * (counter / total) * -1, 0));
               if (counter === total) {
                 mod.setTransform(Transform.translate(0, -100000, 0));
-
-                var appView = new AppView();
-                var mainCtx = Engine.createContext();
-                mainCtx.add(appView);
               }
             }
           }
@@ -71,10 +66,6 @@ define(function(require, exports, module) {
               mod.setTransform(Transform.translate(0, window.innerHeight/2 * (counter / total) * -1, 0));
               if (counter === total) {
                 mod.setTransform(Transform.translate(0, -100000, 0));
-
-                var appView = new AppView();
-                var mainCtx = Engine.createContext();
-                mainCtx.add(appView);
               }
             }
           }
@@ -92,8 +83,7 @@ define(function(require, exports, module) {
     total: 10,
     sliderHeight: 500,
     storyWidth: 400,
-    storyHeight: 274,
-    app: undefined
+    storyHeight: 274
   };
 
   module.exports = LoadingView;
