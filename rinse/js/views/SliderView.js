@@ -209,11 +209,11 @@ define(function(require, exports, module) {
         transform: Transform.translate((i === this.options.total - 1 ? window.innerWidth * -1 : i === 0 ? 0 : i === 1 ? window.innerWidth : window.innerWidth * -10), 0, 0)
       });
 
-      // view = new ContainerSurface({});
-      // view.add(mod).add(container);
-      //
-      // this.sliders.push(view);
-      this.sliderContainer.add(mod).add(container);
+      view = new View({});
+      view.add(mod).add(container);
+
+      this.sliders.push(view);
+      this.sliderContainer.add(view);
     }
   }
 
