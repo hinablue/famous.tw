@@ -11,3 +11,4 @@ lib/famous/transitions
 lib/famous/utilities
 lib/famous/views
 lib/famous/widgets
+*.sublime-*

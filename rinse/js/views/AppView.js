@@ -22,7 +22,7 @@ define(function(require, exports, module) {
     this.container = new ContainerSurface({
       size: [undefined, undefined],
       properties: {
-        overflow: 'auto'
+        overflow: 'hidden'
       }
     });
     this.containerMod = new Modifier({
@@ -30,9 +30,6 @@ define(function(require, exports, module) {
     });
 
     this.views = [];
-    this.scrollView = new SequentialLayout({
-      direction: Utility.Direction.Y
-    });
     this.scrollView = new ScrollExtension({
       margin: 1000000
     });
