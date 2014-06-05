@@ -7,8 +7,14 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <link rel="stylesheet" type="text/css" href="../lib/famous/core/famous.css">
-        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css">
+        <script type="text/javascript" src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <style tyle="text/css">
+        html, body {
+            overflow: auto;
+            margin-bottom: 4em;
+        }
         .nav-buttons { padding: 2em; }
         .button-prev, .button-next {
             font-size: 4em;
@@ -45,7 +51,136 @@
             -ms-border-radius: 8px;
             border-radius: 8px;
         }
+        #slideshow {
+            width: 1000px;
+            height: 500px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h3 {
+            font-weight: bold;
+        }
         </style>
+    </head>
+    <body>
+        <header class="container header">
+            <h1>Famo.us, SlideShow Module</h1>
+        </header>
+        <div class="container">
+            <div id="slideshow"></div>
+
+            <h3>Basic Usage</h3>
+            <pre class="prettyprint linenums lang-js">
+define(function(require, exports, module) {
+  var Engine = require('famous/core/Engine');
+  var Slidershow = require('Slidershow');
+
+  var mainCtx = Engine.createContext();
+  var slidershow = new Slidershow({
+    width: 1000,
+    height: 500,
+    sliders: [
+        {
+            background: 'http://placekitten.com/1000/500?image=1'
+        },
+        {
+            background: 'http://placekitten.com/1000/500?image=2'
+        },
+        {
+            background: 'http://placekitten.com/1000/500?image=3'
+        },
+        {
+            background: 'http://placekitten.com/1000/500?image=4'
+        },
+        {
+            background: 'http://placekitten.com/1000/500?image=5'
+        },
+        {
+            background: 'http://placekitten.com/1000/500?image=6'
+        },
+        {
+            background: 'http://placekitten.com/1000/500?image=7'
+        }
+    ]
+  });
+
+  slidershow.on('pageChange', function() {
+    console.log(arguments);
+  });
+
+  mainCtx.add(slidershow);
+  mainCtx.setPerspective(1);
+});
+            </pre>
+
+            <h3 id="default-options">Default Options</h3>
+            <p>There is the default options in slideshow module.</p>
+            <pre class="prettyprint linenums lang-js">
+{
+    width: window.innerWidth,
+    height: 500,
+    transition: {
+        duration: 600,
+        curve: 'easeInOut'
+    },
+    sliders: []
+}
+            </pre>
+            <h3>Sliders Structure</h3>
+            <p>Each object in the options.sliders array.</p>
+            <pre class="prettyprint linenums lang-js">
+{
+    background: 'http://your.host.name/image.png',
+    content: 'Content String' // or you can use Famo.us's Surface Object here.
+    contentModifier: new StateModifier({}) // Only can use Famo.us's Modifier or StateModifier Object.
+}
+            </pre>
+            <h3>Event</h3>
+            <p>We have one event to listen the slider when page changed.</p>
+            <pre class="prettyprint linenums lang-js">
+slidershow.on('pageChange', function(data) {
+    // data is an object include step and slide no.
+    console.log(data);
+});
+            </pre>
+            <h3>Methods</h3>
+            <p>You can get the total pages of the slider.</p>
+            <pre class="prettyprint linenums lang-js">
+var total_sliders = slidershow.getTotal();
+            </pre>
+            <p>You can get the current page no. in the slider.</p>
+            <pre class="prettyprint linenums lang-js">
+var current_page = slidershow.getPage();
+            </pre>
+            <p>You can jump to page you want.</p>
+            <pre class="prettyprint linenums lang-js">
+// Jump the slider to page 3.
+slidershow.jumpToSlide(3);
+            </pre>
+            <p>Also can slide the slider to the next or prev page.</p>
+            <pre class="prettyprint linenums lang-js">
+slidershow.slidingPage('next' /* or 'prev' */);
+            </pre>
+            <p>Set the options, see the <a href="#default-options">Default Options</a>.</p>
+            <pre class="prettyprint linenums lang-js">
+// Options muse be an object.
+slidershow.setOptions( options );
+            </pre>
+            <h3>TODO</h3>
+            <ol>
+                <li>Add/Remove the page in the slider.</li>
+                <li>Use the EventMapper to do more.</li>
+                <li>Customer view in the page of the slider.</li>
+            </ol>
+            <h3>Author</h3>
+            <a href="http://about.me/hinablue">Hina Chen, aka. 閃光洽.</a>
+        </div>
         <script type="text/javascript" src="../lib/require.js" data-main="js/requireConfig"></script>
         <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -55,7 +190,12 @@
 
         ga('create', 'UA-259895-17', 'hinablue.me');
         ga('send', 'pageview');
+
+        (function($) {
+            $(document).ready(function() {
+                prettyPrint();
+            });
+        })(jQuery);
         </script>
-    </head>
-    <body></body>
+    </body>
 </html>
