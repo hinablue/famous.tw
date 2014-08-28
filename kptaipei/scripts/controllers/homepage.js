@@ -148,7 +148,7 @@ kp.controller('HomepageCtrl', ['$scope', '$famous', '$window', '$timeout', '$htt
   };
   $scope.cover = {
     properties: {
-      backgroundImage: 'url(/imgs/kp.png)'
+      backgroundImage: 'url(./imgs/kp.png)'
     },
   };
 }]);
