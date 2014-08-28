@@ -1,0 +1,18 @@
+{
+  "name": "famous",
+  "main": "famous-global.js",
+  "version": "0.2.2",
+  "homepage": "https://github.com/Famous/Famous",
+  "authors": [
+    "Myles Borins <myles@famo.us>"
+  ],
+  "description": "A Global Object Version of Famous",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "Famo.us"
+  ],
+  "license": "MPL-2.0",
+  "private": true
+}

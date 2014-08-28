@@ -1,0 +1,11 @@
+{
+  "name": "famous-angular-bower",
+  "_cacheHeaders": {
+    "Content-Length": "171",
+    "Content-Type": "application/x-tar"
+  },
+  "main": "index.md",
+  "_source": "https://code.famo.us/famous-angular/bower/famous-angular-bower.tar.gz",
+  "_target": "*",
+  "_originalSource": "https://code.famo.us/famous-angular/bower/famous-angular-bower.tar.gz"
+}

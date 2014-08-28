@@ -1,0 +1,25 @@
+{
+  "name": "famous",
+  "main": "famous-global.js",
+  "version": "0.2.2",
+  "homepage": "https://github.com/Famous/Famous",
+  "authors": [
+    "Myles Borins <myles@famo.us>"
+  ],
+  "description": "A Global Object Version of Famous",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "Famo.us"
+  ],
+  "license": "MPL-2.0",
+  "private": true,
+  "_cacheHeaders": {
+    "Content-Length": "135592",
+    "Content-Type": "application/x-gzip"
+  },
+  "_source": "http://code.famo.us/famous/global/0.2.2/famous-global-0.2.2.tar.gz",
+  "_target": "*",
+  "_originalSource": "http://code.famo.us/famous/global/0.2.2/famous-global-0.2.2.tar.gz"
+}

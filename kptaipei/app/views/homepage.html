@@ -1,0 +1,41 @@
+<fa-modifier fa-translate="scrollTranslate()">
+  <fa-scroll-view fa-size="[undefined, undefined]" fa-pipe-from="scrollHandler">
+    <fa-modifier fa-size="cubeResize()" fa-scale="cover.scale.get()" fa-opacity="cover.opacity.get()">
+      <fa-surface fa-pipe-to="galleryHandlers">
+        <fa-modifier fa-rotate="getRotate()" fa-scale="getScale()" fa-size="cubeSize()" fa-align="[0.5, 0.5]" fa-transform-order="['rotate','scale']">
+          <fa-modifier fa-origin="[0.5, 0.5]" fa-translate="getInitTranslate()">
+            <fa-cuboid fa-dimensions="getDimensions()">
+              <fa-view ng-repeat="face in faces" fa-index="$index">
+                <fa-view ng-if="face.type === 'title'">
+                  <fa-surface class="cover-title" fa-background-color="'#ffffff'" fa-pipe-to="galleryHandlers">
+                    <h1>柯<br>文<br>哲</h1>
+                  </fa-surface>
+                </fa-view>
+                <fa-view ng-if="face.type === 'photo'">
+                  <fa-modifier fa-translate="[0, 0, 1]">
+                    <fa-surface class="cover-photo" fa-pipe-to="galleryHandlers" fa-properties="cover.properties"></fa-surface>
+                  </fa-modifier>
+                </fa-view>
+              </fa-view>
+            </fa-cuboid>
+          </fa-modifier>
+        </fa-modifier>
+      </fa-surface>
+    </fa-modifier>
+    <fa-modifier fa-size="coverContentSize()" fa-translate="coverContentTranslate()">
+      <fa-surface class="cover-content" fa-pipe-to="galleryHandlers">
+        <h1 class="large-slogan">開放官網<br>從市民開始</h1>
+        <div class="readme">
+          <p>這是一個有關於<a href="http://unlimited.kptaipei.tw/">柯文哲野生官網</a>的作品。</p>
+          <p>本作品參考</p>
+          <ul>
+            <li><a href="http://famo.us/">Famo.us</a></li>
+            <li><a href="http://famo.us/integrations/angular/">Famous-Angular</a></li>
+            <li><a href="http://thomasstreet.com/famous-angular-google/">A Case Study of AngularJS as a Framework for Frameworks</a></li>
+            <li><a href="https://github.com/zackbrown/flickrous">Flickrous Demo</a></li>
+          </ul>
+        </div>
+      </fa-surface>
+    </fa-modifier>
+  </fa-scroll-view>
+</fa-modifier>
