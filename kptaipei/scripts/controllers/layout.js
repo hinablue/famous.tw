@@ -115,6 +115,7 @@ kp.controller('LayoutCtrl', ['$scope', '$famous', '$window', '$timeout', '$http'
         $scope.layoutTransitionable.set([menuTransX, 0, 0]);
 
         $scope.hiddenMenuButton = $window.innerWidth < 600 ? false : true;
+        $scope.footerHeight = $window.innerWidth < 600 ? 0 : 50;
       });
     }, 10);
   }
