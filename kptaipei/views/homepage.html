@@ -1,7 +1,7 @@
 <fa-modifier fa-translate="scrollTranslate()">
   <fa-scroll-view fa-size="[undefined, undefined]" fa-pipe-from="scrollHandler">
     <fa-modifier fa-size="cubeResize()" fa-scale="cover.scale.get()" fa-opacity="cover.opacity.get()">
-      <fa-surface fa-pipe-to="galleryHandlers">
+      <fa-view fa-pipe-to="galleryHandlers">
         <fa-modifier fa-rotate="getRotate()" fa-scale="getScale()" fa-size="cubeSize()" fa-align="[0.5, 0.5]" fa-transform-order="['rotate','scale']">
           <fa-modifier fa-origin="[0.5, 0.5]" fa-translate="getInitTranslate()">
             <fa-cuboid fa-dimensions="getDimensions()">
@@ -20,7 +20,7 @@
             </fa-cuboid>
           </fa-modifier>
         </fa-modifier>
-      </fa-surface>
+      </fa-view>
     </fa-modifier>
     <fa-modifier fa-size="coverContentSize()" fa-translate="coverContentTranslate()">
       <fa-surface class="cover-content" fa-pipe-to="galleryHandlers">
