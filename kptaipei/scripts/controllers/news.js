@@ -55,31 +55,11 @@ kp.controller('NewsCtrl', ['$scope', '$famous', '$window', '$timeout', '$http', 
     $state.transitionTo('root.news.single', { key: ($scope.showArticleKey + 1) }, { location: 'replace', notify: false, reload: false });
   };
 
-  var mappingEntries = function(articles) {
-    _.map(articles, function(category) {
-      _.map(category.lists, function(article) {
-        delete(article.category_id);
-        delete(article.category_name);
-        $scope.entries.push(_.extend(article, {
-          key: $scope.entries.length,
-          category: {
-            id: category.id,
-            name: category.name
-          }
-        }));
-      });
-    });
-
-    if ($scope.showArticleKey >= $scope.entries.length || $scope.showArticleKey < 0) {
-      $state.go('root.news', { s1: '', key: '' }, { location: 'replace', notify: false });
-    }
-  }
-
   var categoryArticles = [];
   var getChildren = function(index) {
     var promise = kpapi.getCategoryArticle(categoryArticles[index].id);
     promise.success(function(data) {
-      categoryArticles[index].lists = _.map(data.data, function(article) {
+      _.map(data.data, function(article) {
         article.content = article.content.replace(/ (style|align|class)="[^"]*"/gi, '');
         // Iframe scale
         var iframeWidth = ($window.innerWidth - 80) > 900 ? 900 : ($window.innerWidth - 80);
@@ -93,8 +73,15 @@ kp.controller('NewsCtrl', ['$scope', '$famous', '$window', '$timeout', '$http', 
         if (article.content[0] === '%') {
           article.content = decodeURIComponent(article.content);
         }
-        return _.extend(article, {
+        delete(article.category_id);
+        delete(article.category_name);
+        $scope.entries.push(_.extend(article, {
           id: article.id,
+          key: $scope.entries.length,
+          category: {
+            id: article.category_id,
+            name: article.category_name
+          },
           datetime: new Date(article.post_date),
           contentSnippet: function() {
             return $sce.trustAsHtml(article.content);
@@ -120,7 +107,7 @@ kp.controller('NewsCtrl', ['$scope', '$famous', '$window', '$timeout', '$http', 
               });
             }, 1);
           }
-        });
+        }));
       });
       categoryArticles[index].lists.sort(function(a, b) {
         return b.id - a.id;
@@ -128,8 +115,7 @@ kp.controller('NewsCtrl', ['$scope', '$famous', '$window', '$timeout', '$http', 
       index++;
 
       if (index >= categoryArticles.length) {
-        mappingEntries(categoryArticles);
-        $scope.cache.news = categoryArticles;
+        $scope.cache.news = $scope.entries;
       } else {
         getChildren(index);
       }
@@ -156,6 +142,6 @@ kp.controller('NewsCtrl', ['$scope', '$famous', '$window', '$timeout', '$http', 
     });
   } else {
     console.log("CACHED!");
-    mappingEntries($scope.cache.news);
+    $scope.entries = $scope.cache.news;
   }
 }]);

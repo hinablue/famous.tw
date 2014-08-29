@@ -3,18 +3,16 @@
     <fa-scroll-view fa-pipe-from="scrollHandler">
       <fa-view ng-repeat="photo in photos" fa-animate-enter="photoEnter(photo, $done)" fa-index="$index">
         <fa-modifier fa-size="photoSize()" fa-scale="photo.scale.get()" fa-opacity="photo.opacity.get()">
-          <fa-modifier fa-rotate="getRotate()">
-            <fa-view fa-origin="[0.5, 0.5]" fa-translate="getInitTranslate()">
-              <fa-modifier fa-size="[undefined, undefined]">
-                <fa-surface class="photo" fa-pipe-to="photoHandlers" fa-properties="photo.properties"></fa-surface>
-              </fa-modifier>
-              <fa-modifier fa-size="[undefined, true]" fa-align="[0, 0.8]">
-                <fa-surface class="photo-description" fa-pipe-to="photoHandlers">
-                  <h4>{{ photo.title }}</h4>
-                  <time am-time-ago="photo.date_taken"></time>
-                </fa-surface>
-              </fa-modifier>
-            </fa-view>
+          <fa-modifier fa-origin="[.5, .5]" fa-rotate="getRotate()" fa-scale="getScale()" fa-perspective="1000">
+            <fa-modifier fa-size="[undefined, undefined]" fa-translate="[0, 0, 1]">
+              <fa-surface class="photo" fa-pipe-to="photoHandlers" fa-properties="photo.properties"></fa-surface>
+            </fa-modifier>
+            <fa-modifier fa-size="[undefined, true]" fa-align="[0, 0.8]" fa-translate="[0, 0, 2]">
+              <fa-surface class="photo-description" fa-pipe-to="photoHandlers">
+                <h4>{{ photo.title }}</h4>
+                <time am-time-ago="photo.date_taken"></time>
+              </fa-surface>
+            </fa-modifier>
           </fa-modifier>
         </fa-modifier>
       </fa-view>

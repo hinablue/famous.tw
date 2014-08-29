@@ -8,7 +8,7 @@
               <fa-view fa-origin="[0.5, 0.5]">
                 <fa-modifier fa-size="[undefined, undefined]">
                   <fa-surface class="video" fa-pipe-to="videoHandlers">
-                    <iframe ng-src="{{ video.link }}" width="video.getWidth()" height="video.getHeight()" style="margin:0;" frameborder="0" allowfullscreen></iframe>
+                    <iframe ng-src="{{ video.link }}" width="{{ video.getWidth() }}" height="{{ video.getHeight() }}" style="margin:0;" frameborder="0" allowfullscreen></iframe>
                     <h4>{{ video.title }}</h4>
                     <time am-time-ago="video.datetime"></time>
                   </fa-surface>

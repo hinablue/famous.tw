@@ -1,9 +1,7 @@
 'use strict';
 
 var kp = angular.module('kptaipei',
-  ['ngAnimate', 'ngCookies',
-    'ngTouch', 'ngSanitize',
-    'ngResource', 'ui.router',
+  ['ngAnimate', 'ngSanitize', 'ui.router',
     'angularMoment', 'famous.angular'])
   .constant('angularMomentConfig', {
     preprocess: 'utc',

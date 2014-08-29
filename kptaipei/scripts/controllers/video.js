@@ -21,27 +21,10 @@ kp.controller('VideoCtrl', ['$scope', '$famous', '$window', '$timeout', '$http',
     "scroll": ScrollSync
   });
 
-  var PHOTO_SCROLL_SPEED = .005;
-  var TRANSITIONS = {
-    ROTATE: {
-      duration: 333,
-      curve: Easing.outBounce
-    }
-  };
   var video_id = $stateParams['video_id'];
   var _rotate = new Transitionable([0, 0, 0]);
 
   var videoSync = new GenericSync(['mouse', 'touch', 'scroll'], {direction: [GenericSync.DIRECTION_X, GenericSync.DIRECTION_Y]});
-  var _lastSyncStartTime = new Date();
-  videoSync.on('start', function() {
-    _rotate.halt();
-    _rotate.set([.1, .5, 0], TRANSITIONS.ROTATE);
-  });
-
-  videoSync.on('end', function(data) {
-    _rotate.halt();
-    _rotate.set([0, 0, 0], TRANSITIONS.ROTATE);
-  });
 
   $scope.backToVideos = function() {
     $state.go('root.videos', {}, { location: 'replace', notify: true });
@@ -101,17 +84,17 @@ kp.controller('VideoCtrl', ['$scope', '$famous', '$window', '$timeout', '$http',
           datetime: new Date(video.publishedAt),
           link: video.link.replace('watch?v=', 'embed/'),
           getWidth: function() {
-            if ($window.innerWidth > 560) {
-              return 560;
+            if ($window.innerWidth > 640) {
+              return 640;
             } else {
               return $window.innerWidth - 40;
             }
           },
           getHeight: function() {
-            if ($window.innerWidth > 560) {
-              return 315;
+            if ($window.innerWidth > 640) {
+              return 360;
             } else {
-              return ($window.innerWidth - 40) * 315 / 560;
+              return ($window.innerWidth - 40) * 360 / 640;
             }
           }
         });

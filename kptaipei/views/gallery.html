@@ -1,26 +1,22 @@
 <fa-modifier fa-translate="scrollTranslate()">
   <fa-scroll-view fa-pipe-from="scrollHandler">
-    <fa-view ng-repeat="album in gallery" fa-size="cubeSize()" fa-animate-enter="alubmEnter(album, $done)" fa-index="$index">
-      <fa-modifier fa-size="cubeSize()" fa-scale="album.scale.get()" fa-opacity="album.opacity.get()">
+    <fa-view ng-repeat="n in [] | range:galleryRepeatRange" fa-size="cubeSize()" fa-index="$index">
+      <fa-modifier fa-size="cubeSize()">
         <fa-modifier fa-rotate="getRotate()" fa-scale="getScale()" fa-size="cubeSize()" fa-align="[0.5, 0.5]" fa-transform-order="['rotate','scale']">
           <fa-modifier fa-origin="[0.5, 0.5]" fa-translate="getInitTranslate()">
             <fa-cuboid fa-dimensions="getDimensions()">
-              <fa-view ng-repeat="face in faces" fa-index="$index">
+              <fa-view ng-repeat="(index, face) in faces" fa-index="$index">
                 <fa-view ng-if="face.type === 'title'">
-                  <fa-surface fa-background-color="'rgba(0, 0, 0, 0.6)'" fa-pipe-to="galleryHandlers">
-                    <div class="album-description-box" data-album="{{ album.id }}">
-                      <div class="album-description" style="verticalAlign()" data-album="{{ album.id }}">
-                        <h4 data-album="{{ album.id }}">{{ album.title }}</h4>
-                        <p data-album="{{ album.id }}">{{ album.description }}</p>
-                      </div>
-                    </div>
+                  <fa-surface fa-background-color="'#ffffff'" fa-pipe-to="galleryHandlers" fa-properties="{ backgroundImage: 'url(./imgs/kp.png)', backgroundSize: 'auto 100%' }">
                   </fa-surface>
                 </fa-view>
                 <fa-view ng-if="face.type === 'photo'">
                   <fa-modifier fa-translate="[0, 0, 1]">
-                    <fa-surface class="album-photo" fa-pipe-to="galleryHandlers" fa-properties="album.properties">
-                      <div class="album-photo-cover" data-album="{{ album.id }}"></div>
+                    <fa-surface class="album-photo" fa-pipe-to="galleryHandlers" fa-properties="getCuboidProperties(index, n)">
                     </fa-surface>
+                  </fa-modifier>
+                  <fa-modifier fa-size="[undefined, 100]" fa-translate="[0, 380, 2]">
+                    <fa-surface class="album-photo-cover" fa-pipe-to="galleryHandlers" fa-click="goAlbum(index, n)">{{ getAlbumTitle(index, n) }}</fa-surface>
                   </fa-modifier>
                 </fa-view>
               </fa-view>

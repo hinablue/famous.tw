@@ -39,18 +39,13 @@ kp.controller('GalleryCtrl', ['$scope', '$famous', '$window', '$timeout', '$http
   var _scale = new Transitionable([1,1,1]);
 
   $scope.faces = [
-    {type: "photo"},
-    {type: "photo"},
-    {type: "title"},
-    {type: "photo"},
-    {type: "title"},
-    {type: "photo"},
+    /*front */ {type: "photo"},
+    /*top   */ {type: "title"},
+    /*right */ {type: "photo"},
+    /*bottom*/ {type: "title"},
+    /*left  */ {type: "photo"},
+    /*back  */ {type: "photo"},
   ];
-
-  $scope.handleDoubleTap = function(event) {
-    var album_id = event.target.dataset.album;
-    $state.go('root.photos', { s1: '/', album_id: album_id }, { location: 'replace', notify: true });
-  };
 
   var _lastSyncStartTime = new Date();
   cubeSync.on('start', function() {
@@ -86,14 +81,6 @@ kp.controller('GalleryCtrl', ['$scope', '$famous', '$window', '$timeout', '$http
   });
 
   $scope.cubeHandler = new EventHandler();
-  $scope.cubeHandler.on('click', function(event) {
-    var currentTime = new Date();
-
-    if(currentTime - _lastSyncStartTime < DOUBLE_TAP_THRESHOLD) {
-      $scope.handleDoubleTap(event);
-    }
-    _lastSyncStartTime = currentTime;
-  });
   $scope.cubeHandler.pipe(cubeSync);
 
   $scope.galleryHandlers = [$scope.cubeHandler, $scope.scrollHandler];
@@ -144,34 +131,138 @@ kp.controller('GalleryCtrl', ['$scope', '$famous', '$window', '$timeout', '$http
       return 'height: '+$window.innerWidth+'px; margin-top: -'+($window.innerWidth / 2)+'px;';
     }
   };
+  $scope.getCuboidProperties = function(face_index, n) {
+    var url;
+    switch(face_index) {
+      case 0: /* front */
+        url = $scope.gallery.front[n] === undefined ? undefined : $scope.gallery.front[n].thumbnails.medium;
+      break;
+      case 2: /* right */
+        url = $scope.gallery.right[n] === undefined ? undefined : $scope.gallery.right[n].thumbnails.medium;
+      break;
+      case 4: /* left */
+        url = $scope.gallery.left[n] === undefined ? undefined : $scope.gallery.left[n].thumbnails.medium;
+      break;
+      case 5: /* back */
+        url = $scope.gallery.back[n] === undefined ? undefined : $scope.gallery.back[n].thumbnails.medium;
+      break;
+    }
 
+    if (url === undefined) {
+      return {
+        backgroundImage: 'none'
+      };
+    } else {
+      return {
+        backgroundImage: 'url('+url+')'
+      };
+    }
+  };
+  $scope.goAlbum = function(face_index, n) {
+    var album_id;
+    switch(face_index) {
+      case 0: /* front */
+        album_id = $scope.gallery.front[n] === undefined ? undefined : $scope.gallery.front[n].id;
+      break;
+      case 2: /* right */
+        album_id = $scope.gallery.right[n] === undefined ? undefined : $scope.gallery.right[n].id;
+      break;
+      case 4: /* left */
+        album_id = $scope.gallery.left[n] === undefined ? undefined : $scope.gallery.left[n].id;
+      break;
+      case 5: /* back */
+        album_id = $scope.gallery.back[n] === undefined ? undefined : $scope.gallery.back[n].id;
+      break;
+    }
+    var currentTime = new Date();
 
-  if (Object.keys($scope.cache.gallery).length === 0) {
-    var gallery = {};
+    if(currentTime - _lastSyncStartTime < DOUBLE_TAP_THRESHOLD && album_id !== undefined) {
+      $state.go('root.photos', { album_id: album_id }, { location: 'replace', notify: true });
+    }
+    _lastSyncStartTime = currentTime;
+  };
+  $scope.getAlbumTitle = function(face_index, n) {
+    var title;
+    switch(face_index) {
+      case 0: /* front */
+        title = $scope.gallery.front[n] === undefined ? undefined : $scope.gallery.front[n].title;
+      break;
+      case 2: /* right */
+        title = $scope.gallery.right[n] === undefined ? undefined : $scope.gallery.right[n].title;
+      break;
+      case 4: /* left */
+        title = $scope.gallery.left[n] === undefined ? undefined : $scope.gallery.left[n].title;
+      break;
+      case 5: /* back */
+        title = $scope.gallery.back[n] === undefined ? undefined : $scope.gallery.back[n].title;
+      break;
+    }
+    return title === undefined && '' || title;
+  };
+
+  $scope.galleryRepeatRange = 0;
+
+  if ($scope.cache.gallery.front.length === 0
+    || $scope.cache.gallery.back.length === 0
+    || $scope.cache.gallery.right.length === 0
+    || $scope.cache.gallery.left.length === 0) {
+    $scope.gallery = $scope.cache.gallery;
     var promise = kpapi.getAlbums();
     promise.success(function(data) {
+      var i = 0;
       _.map(data.data, function(album) {
-        gallery[album.id] = _.extend(album, {
+        var gallery = _.extend(album, {
           scale: new Transitionable([.001, .001, .001]),
           opacity: new Transitionable(0),
-          properties: {
-            backgroundImage: 'url('+album.thumbnails.medium+')'
-          },
           photos: []
         });
+        switch(i % 4) {
+          case 0:
+            $scope.gallery.front.push(gallery);
+            $scope.gallery.sets[album.id] = {
+              type: 'front',
+              key: $scope.gallery.front.length - 1
+            };
+          break;
+          case 1:
+            $scope.gallery.right.push(gallery);
+            $scope.gallery.sets[album.id] = {
+              type: 'right',
+              key: $scope.gallery.right.length - 1
+            };
+          break;
+          case 2:
+            $scope.gallery.left.push(gallery);
+            $scope.gallery.sets[album.id] = {
+              type: 'left',
+              key: $scope.gallery.left.length - 1
+            };
+          break;
+          case 3:
+            $scope.gallery.back.push(gallery);
+            $scope.gallery.sets[album.id] = {
+              type: 'back',
+              key: $scope.gallery.back.length - 1
+            };
+          break;
+        }
+        i++;
       });
-      $scope.cache.gallery = gallery;
-      $scope.gallery = _.map(gallery, function(album) {
-        return album;
-      });
+      console.log($scope.gallery);
+      $scope.cache.gallery = $scope.gallery;
+      $scope.galleryRepeatRange = Math.round(i / 4);
     });
     promise.error(function(data) {
       console.log("API ERROR!", arguments);
     });
   } else {
     console.log('CACHED!');
-    $scope.gallery = _.map($scope.cache.gallery, function(album) {
-      return album;
-    });
+    $scope.gallery = $scope.cache.gallery;
+    $scope.galleryRepeatRange = Math.max(
+      $scope.cache.gallery.front.length,
+      $scope.cache.gallery.back.length,
+      $scope.cache.gallery.left.length,
+      $scope.cache.gallery.right.length
+    );
   }
 }]);
