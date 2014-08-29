@@ -1,0 +1,54 @@
+<fa-app style="overflow: hidden;" class="container" ng-controller="LayoutCtrl">
+  <fa-modifier ng-show="hiddenMenuButton === false" fa-size="[undefined, undefined]" fa-opacity="menuOptions.opacity" fa-translate="menuTransitionable.get()">
+    <fa-container-surface fa-options="menuOptions.container">
+      <fa-scroll-view fa-pipe-from="scrollHandler" fa-options="menuOptions.scrollView">
+        <fa-modifier fa-size="[undefined, 30]" fa-translate="[0, $index * 30, 0]" ng-repeat="item in menuItems" fa-index="$index">
+          <fa-surface fa-pipe-to="scrollHandler" fa-click="triggerMenu($event, item.url)">
+            <p class="menu-item">{{ item.content }}</p>
+          </fa-surface>
+        </fa-modifier>
+      </fa-scroll-view>
+    </fa-container-surface>
+  </fa-modifier>
+  <fa-modifier fa-size="[undefined, undefined]" fa-translate="layoutTransitionable.get()" fa-opacity="layoutOpacity">
+    <fa-header-footer-layout>
+      <fa-container-surface fa-options="headerOptions">
+        <fa-surface fa-size="[undefined, 50]">
+          <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+              <h1 class="slogan navbar-brand"><a ui-sref="root.home">野生柯 P 官網</a></h1>
+            </div>
+          </nav>
+        </fa-surface>
+        <fa-modifier fa-origin="[1, 0.5]" ng-show="hiddenMenuButton === true">
+          <fa-container-surface fa-options="{ classes: ['header-menu-item'], size: [300, 50] }">
+            <fa-view ng-repeat="item in menuItems" fa-index="$index">
+              <fa-modifier fa-size="[70, true]" fa-translate="[($index - 1) * 70, 0, 0]" ng-if="$index > 0 && $index < 5">
+                <fa-surface fa-click="triggerHeaderMenu(item.url)">
+                  <p class="header-menu-item">{{ item.content }}</p>
+                </fa-surface>
+              </fa-modifier>
+            </fa-view>
+          </fa-container-surface>
+        </fa-modifier>
+        <fa-modifier ng-show="hiddenMenuButton === false" fa-transform="menuBtnOptions.transform" fa-origin="menuBtnOptions.origin">
+          <fa-surface class="menu-button" fa-size="menuBtnOptions.size" ng-click="triggerMenu($event)">
+            <i class="glyphicon glyphicon-th"></i>
+          </fa-surface>
+        </fa-modifier>
+      </fa-container-surface>
+      <fa-container-surface fa-options="mainOptions">
+        <fa-modifier>
+          <div ui-view></div>
+        </fa-modifier>
+      </fa-container-surface>
+      <fa-view ng-show="hiddenMenuButton === true">
+        <fa-container-surface fa-options="footerOptions">
+          <fa-surface fa-size="[undefined, 50]">
+            <p class="footer"><a href="htp://blog.hinablue.me">Hina</a> at <a href="https://bhuntr.com">Bounty Hunter</a>, with <a href="http://famo.us/integrations/angular" target="_blank">Famous-Angular</a></p>
+          </fa-surface>
+        </fa-container-surface>
+      </fa-view>
+    </fa-header-footer-layout>
+  </fa-modifier>
+</fa-app>

@@ -1,0 +1,19 @@
+<fa-modifier>
+  <fa-view ng-repeat="(index, article) in entries track by article.key" fa-index="$index">
+    <fa-modifier ng-if="index === showArticleKey" fa-scale="article.scale.get()" fa-opacity="article.opacity.get()" fa-size="getSize()" fa-animate-enter="articleEnter(article, article.done($done))" fa-animate-leave="articleLeave(article, $done)">
+      <fa-scroll-view fa-pipe-from="scrollHandler" fa-options="scrollView.article">
+        <fa-modifier class="article-view">
+          <fa-surface fa-pipe-to="scrollHandler" fa-background-color="'#ffffff'">
+            <article class="article-content">
+              <h3>{{ article.title }}</h3>
+              <time am-time-ago="article.last_modify"></time><small>({{ article.last_modify | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a' }})</small>
+              <div class="content" ng-bind-html="article.contentSnippet()"></div>
+              <button type="button" class="btn btn-info" ng-if="showButton('prev')" ng-click="moveTo('prev')"><i class="glyphicon glyphicon-chevron-left"></i></button>
+              <button type="button" class="btn btn-info" ng-if="showButton('next')" ng-click="moveTo('next')"><i class="glyphicon glyphicon-chevron-right"></i></button>
+            </article>
+          </fa-surface>
+        </fa-modifier>
+      </fa-scroll-view>
+    </fa-modifier>
+  </fa-view>
+</fa-modifier>
