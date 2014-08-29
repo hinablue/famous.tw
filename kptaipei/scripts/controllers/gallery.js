@@ -57,7 +57,7 @@ kp.controller('GalleryCtrl', ['$scope', '$famous', '$window', '$timeout', '$http
   cubeSync.on('update', function(data) {
     var newRotate = _rotate.get();
     newRotate[0] -= data.delta[1] * CUBE_SCROLL_SPEED;
-    newRotate[1] += data.delta[0] * CUBE_SCROLL_SPEED;
+    newRotate[1] += data.delta[0] * CUBE_SCROLL_SPEED * 3;
 
     _rotate.set.call(_rotate, newRotate);
   });
