@@ -1,0 +1,33 @@
+<fa-modifier fa-translate="scrollTranslate()">
+  <fa-scroll-view fa-pipe-from="scrollHandler">
+    <fa-view ng-repeat="video in videos" fa-size="videoSize()" fa-animate-enter="videoEnter(video, $done)" fa-index="$index">
+      <fa-modifier fa-size="videoSize()" fa-scale="video.scale.get()" fa-opacity="video.opacity.get()">
+        <fa-modifier fa-rotate="getRotate()" fa-scale="getScale()" fa-size="videoSize()" fa-align="[0.5, 0.5]" fa-transform-order="['rotate','scale']">
+          <fa-modifier fa-origin="[0.5, 0.5]" fa-translate="getInitTranslate()">
+            <fa-cuboid fa-dimensions="getDimensions()">
+              <fa-view ng-repeat="face in faces" fa-index="$index">
+                <fa-view ng-if="face.type === 'title'">
+                  <fa-surface fa-background-color="'rgba(0, 0, 0, 0.6)'" fa-pipe-to="videoHandlers">
+                    <div class="video-description-box" data-video="{{ video.id }}">
+                      <div class="video-description" style="verticalAlign()" data-video="{{ video.id }}">
+                        <h4 data-video="{{ video.id }}">{{ video.title }}</h4>
+                        <p data-video="{{ video.id }}">{{ video.description }}</p>
+                      </div>
+                    </div>
+                  </fa-surface>
+                </fa-view>
+                <fa-view ng-if="face.type === 'photo'">
+                  <fa-modifier fa-translate="[0, 0, 1]">
+                    <fa-surface class="video-photo" fa-pipe-to="videoHandlers" fa-properties="video.properties">
+                      <div class="video-photo-cover" data-video="{{ video.id }}"></div>
+                    </fa-surface>
+                  </fa-modifier>
+                </fa-view>
+              </fa-view>
+            </fa-cuboid>
+          </fa-modifier>
+        </fa-modifier>
+      </fa-modifier>
+    </fa-view>
+  </fa-scroll-view>
+</fa-modifier>
